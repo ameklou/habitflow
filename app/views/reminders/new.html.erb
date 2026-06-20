@@ -1,0 +1,10 @@
+<% content_for :title, "New reminder" %>
+
+<section class="mx-auto max-w-2xl py-10">
+  <h1 class="text-3xl font-bold tracking-tight text-slate-950">New reminder</h1>
+  <p class="mt-2 text-sm text-slate-600">Choose when HabitFlow should email you about a habit.</p>
+
+  <div class="mt-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+    <%= render "form", reminder: @reminder %>
+  </div>
+</section>

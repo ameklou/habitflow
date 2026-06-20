@@ -1,0 +1,9 @@
+<h1><%= @habit.name %></h1>
+
+<p>This is your HabitFlow reminder to complete <strong><%= @habit.name %></strong> today.</p>
+
+<% if @habit.description.present? %>
+  <p><%= @habit.description %></p>
+<% end %>
+
+<p><%= link_to "Open dashboard", dashboard_url %></p>

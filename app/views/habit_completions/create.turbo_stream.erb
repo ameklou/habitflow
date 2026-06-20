@@ -1,0 +1,2 @@
+<%= turbo_stream.replace dom_id(@habit, :card), partial: "habits/habit", locals: { habit: @habit } %>
+<%= turbo_stream.replace "habits_completion_summary", partial: "habits/completion_summary", locals: { habits: @habits } %>

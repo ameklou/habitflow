@@ -1,0 +1,39 @@
+<%= form_with(model: category, class: "space-y-6") do |form| %>
+  <% if category.errors.any? %>
+    <div class="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <h2 class="font-semibold"><%= pluralize(category.errors.count, "error") %> prevented this category from being saved.</h2>
+      <ul class="mt-2 list-disc space-y-1 pl-5">
+        <% category.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, class: "block text-sm font-medium text-slate-800" %>
+    <%= form.text_field :name, autofocus: true, class: "mt-2 w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20" %>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-3">
+    <div>
+      <%= form.label :color, class: "block text-sm font-medium text-slate-800" %>
+      <%= form.color_field :color, class: "mt-2 h-10 w-full rounded-md border border-slate-300 px-2 py-1 shadow-sm" %>
+    </div>
+
+    <div>
+      <%= form.label :icon, class: "block text-sm font-medium text-slate-800" %>
+      <%= form.text_field :icon, placeholder: "folder", class: "mt-2 w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20" %>
+    </div>
+
+    <div>
+      <%= form.label :position, class: "block text-sm font-medium text-slate-800" %>
+      <%= form.number_field :position, min: 0, class: "mt-2 w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20" %>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-3">
+    <%= form.submit class: "rounded-md bg-emerald-700 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-800" %>
+    <%= link_to "Cancel", categories_path, class: "rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50" %>
+  </div>
+<% end %>

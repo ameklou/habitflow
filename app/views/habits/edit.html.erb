@@ -1,0 +1,12 @@
+<% content_for :title, "Edit #{@habit.name}" %>
+
+<section class="mx-auto max-w-2xl py-10">
+  <div>
+    <h1 class="text-3xl font-bold tracking-tight text-slate-950">Edit habit</h1>
+    <p class="mt-2 text-sm text-slate-600">Keep this habit aligned with how you want to track it.</p>
+  </div>
+
+  <div class="mt-8 rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+    <%= render "form", habit: @habit %>
+  </div>
+</section>

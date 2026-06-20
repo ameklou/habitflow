@@ -1,0 +1,72 @@
+<% content_for :title, "Stats" %>
+
+<section class="py-10">
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-slate-950">Stats</h1>
+      <p class="mt-2 text-sm text-slate-600">Review consistency across your habit history.</p>
+    </div>
+
+    <%= link_to "Back to dashboard", dashboard_path, class: "inline-flex items-center justify-center rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50" %>
+  </div>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-4">
+    <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <p class="text-sm text-slate-500">Current streak</p>
+      <p class="mt-1 text-3xl font-bold text-slate-950"><%= @summary.current_streak %></p>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <p class="text-sm text-slate-500">Longest streak</p>
+      <p class="mt-1 text-3xl font-bold text-slate-950"><%= @summary.longest_streak %></p>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <p class="text-sm text-slate-500">7-day rate</p>
+      <p class="mt-1 text-3xl font-bold text-slate-950"><%= @summary.completion_rate(7) %>%</p>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+      <p class="text-sm text-slate-500">Total completions</p>
+      <p class="mt-1 text-3xl font-bold text-slate-950"><%= @summary.total_completions %></p>
+    </div>
+  </div>
+
+  <div class="mt-10 grid gap-8 lg:grid-cols-2">
+    <section>
+      <div class="flex items-center justify-between gap-4">
+        <h2 class="text-xl font-semibold text-slate-950">Last 7 days</h2>
+        <span class="text-sm font-semibold text-slate-600"><%= @summary.completion_rate(7) %>%</span>
+      </div>
+
+      <div class="mt-5 space-y-3">
+        <% @last_7_days.each do |day| %>
+          <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="flex items-center justify-between gap-4">
+              <p class="text-sm font-medium text-slate-700"><%= day.date.strftime("%a, %b %-d") %></p>
+              <p class="text-sm font-semibold text-slate-950"><%= day.completed %>/<%= day.total %></p>
+            </div>
+            <div class="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
+              <div class="h-full rounded-full bg-emerald-600" style="width: <%= day.completion_rate %>%"></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-center justify-between gap-4">
+        <h2 class="text-xl font-semibold text-slate-950">Last 30 days</h2>
+        <span class="text-sm font-semibold text-slate-600"><%= @summary.completion_rate(30) %>%</span>
+      </div>
+
+      <div class="mt-5 grid grid-cols-10 gap-2">
+        <% @last_30_days.each do |day| %>
+          <% shade = day.complete? ? "bg-emerald-600" : day.completed.positive? ? "bg-emerald-300" : "bg-slate-200" %>
+          <div class="aspect-square rounded <%= shade %>" title="<%= day.date.strftime("%b %-d") %>: <%= day.completed %>/<%= day.total %>"></div>
+        <% end %>
+      </div>
+
+      <div class="mt-5 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-600 shadow-sm">
+        30-day completion rate: <span class="font-semibold text-slate-950"><%= @summary.completion_rate(30) %>%</span>
+      </div>
+    </section>
+  </div>
+</section>

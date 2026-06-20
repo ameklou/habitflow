@@ -1,0 +1,9 @@
+HabitFlow reminder: <%= @habit.name %>
+
+Complete <%= @habit.name %> today.
+
+<% if @habit.description.present? %>
+<%= @habit.description %>
+<% end %>
+
+Open dashboard: <%= dashboard_url %>
