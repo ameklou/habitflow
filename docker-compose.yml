@@ -1,0 +1,33 @@
+services:
+  web:
+    build: .
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    # Traefik labels for Dokploy routing and SSL
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rails-web.rule=Host(`habit.panierxpress.com`)" # Replace with your domain
+      - "traefik.http.routers.rails-web.entrypoints=websecure"
+      - "traefik.http.routers.rails-web.tls.certresolver=letsencrypt"
+      - "traefik.http.services.rails-web.loadbalancer.server.port=4000"
+    networks:
+      - dokploy-network
+
+  worker:
+    build: .
+    restart: always
+    # Override the default CMD to run Solid Queue
+    command: ["bin/jobs"]
+    env_file:
+      - .env
+    networks:
+      - dokploy-network
+
+
+networks:
+  dokploy-network:
+    external: true
