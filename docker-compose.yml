@@ -4,9 +4,9 @@ services:
     restart: always
     env_file:
       - .env
-    depends_on:
-      db:
-        condition: service_healthy
+    ports:
+      - "3000"
+    command: ./bin/rails server -b 0.0.0.0
     # Traefik labels for Dokploy routing and SSL
     labels:
       - "traefik.enable=true"
